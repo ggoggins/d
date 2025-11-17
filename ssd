@@ -1,0 +1,451 @@
+#include <iostream>
+#include <string>
+#include <random>
+#include "windows.h"
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+string koloruj(char znak, int kod_koloru) {
+	return "\033[" + to_string(kod_koloru) + "m" + znak + "\033[0m";
+}
+
+int przypiszKolor(char litera) {
+	switch (litera) {
+	case 'r': return 31; // czerwony
+	case 'g': return 32; // zielony
+	case 'b': return 34; // niebieski
+	case 'y': return 33; // żółty
+	case 'm': return 35; // magenta
+	case 'c': return 36; // cyjan
+	default:  return 37; // biały (domyślny)
+	}
+}
+
+int main()
+{
+
+	///////////////
+   // ZADANIE 1 //
+  ///////////////
+
+	int odp1, odp2, zaliczone = 0;
+	bool powtorz = true;
+
+	while (powtorz)
+	{
+		random_device los;
+		mt19937 rand(los());
+		uniform_int_distribution<int> zakres(-100, 100);
+
+		int liczba1 = zakres(rand), liczba2 = zakres(rand);
+
+		if (liczba2 < 0)
+		{
+			cout << "Pytanie 1: " << liczba1 << " + (" << liczba2 << ") = ?" << endl;
+			cout << "Pytanie 2: " << liczba1 << " - (" << liczba2 << ") = ?" << endl;
+		}
+		else
+		{
+			cout << "Pytanie 1: " << liczba1 << " + " << liczba2 << " = ?" << endl;
+			cout << "Pytanie 2: " << liczba1 << " - " << liczba2 << " = ?" << endl;
+		}
+
+		cout << "Odp 1: ";
+		cin >> odp1;
+		cout << "Odp 2: ";
+		cin >> odp2;
+
+		if (odp1 == liczba1 + liczba2 && odp2 == liczba1 - liczba2)
+		{
+			cout << "Brawo, udalo Ci sie odpowiedziec na pytanie starozytnej cywilizacji!\nCzy chcesz powtorzyc test? [1 - tak   0 - nie]" << endl;
+			zaliczone++;
+			cin >> powtorz;
+		}
+		else
+		{
+			cout << "Jedna z odpowiedzi jest nieprawidlowa!\nCzy chcesz powtorzyc test? [1 - tak   0 - nie]" << endl;
+			cin >> powtorz;
+		}
+	}
+	cout << "Ilosc zaliczonych testow: " << zaliczone;
+
+
+	///////////////
+   // ZADANIE 2 //
+  ///////////////
+
+	string strumien = "!***#0&!+!+!!~*~*~#*#*&**0!#!&!00&*0!~*+~#0~*&#+*+!!++&+#!~0*!#00!&~*+#&**#*~~!0**~*00**0~#!0+&0#&!#!0&#+&+~**#!!*0#0*!&!&*!+~#!*&*#+!*#*~~**!&*!*~&!*+*~*0+0+!*&*+~!~*~~#!~#!*~&+~+~*~~&0#0&*&#&~#*##&0*0!*!0#0!0!*+#&&&*~#&**#*0+!!!0*!#*!+~!0&0!0*++*!~!!**~&&*0##~#*!~*+**~&***~&!+!***!*&##0&!+~!~~+**!*~~~*#0~+#0#+*0&+!#**!+!#++&#~*!#*~~*&0##!&!00&*&*~&*0&!+0~*#~~0+&!~~*#+#0&~!~#0&~0~*&+~*#*0~00++&**&+**~!~+*&0#*+*!0&&*~!~**~*~~~++!&~~0*0#*0++00!0&0&#!~~~#~#!~~~&#!+*~**&~*~*!*0!~##~~+~0#+!&~&0&+##&++0&!#**~!&&**+&!00++*~!0*0~~+**~#+0&~&&&&0*+##&+~*0!#0*!#*!+***!#~*!!+#!+&*0!#~&#*!&#0!&*!!&+~&&!&+#*&0!0&+#&*&&0+~*#+#*~~*~++&!!##0**0+*#!**#+&&*0#~!*#&*!!0+!+*&!#!&#~!+++~~~0!&+&!#*~*0*&~#**0#*#0+&!00*+&0&*~!~000~++0*#!+~#*&*!00!*#~B";
+	int j = strumien.length();
+	int skarb = 0;
+	int g = 0;
+	if (strumien[j - 1] == 'B') {
+		for (int i = j; i > 0; i--)
+		{
+			if (strumien[i] == '*')
+			{
+				cout << "Skarb jest w segment " << g << endl;
+				skarb++;
+			}
+			g++;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < j; i++)
+		{
+			if (strumien[i] == '*')
+			{
+				cout << "Skarb jest w segment " << i + 1 << endl;
+				skarb++;
+			}
+		}
+	}
+	cout << "W rzece jest " << skarb << " skarbow." << endl;
+
+
+	///////////////
+   // ZADANIE 3 //
+  ///////////////
+
+	int ile_napraw;
+	cout << "Podaj liczbe napraw do wykonania: ";
+	cin >> ile_napraw;
+	int suma = 0;
+	int cena;
+	int liczby[45];
+
+	for (int i = 0; i < ile_napraw; i++)
+	{
+		if (i == 0)
+		{
+			cena = 1;
+			cout << "Cena [" << i + 1 << "] " << cena << " [1 - tak   0 - nie]" << endl;
+
+			liczby[i] = cena;
+		}
+		else if (i == 1)
+		{
+			cena = 2;
+			cout << "Cena [" << i + 1 << "] " << cena << " [1 - tak   0 - nie]" << endl;
+
+			liczby[i] = cena;
+		}
+		else
+		{
+			cena = liczby[i - 2] + liczby[i - 1];
+
+			cout << "Cena [" << i + 1 << "] " << cena << " [1 - tak   0 - nie]" << endl;
+
+			liczby[i] = cena;
+		}
+		int czy_naprawic;
+		cin >> czy_naprawic;
+
+		if (czy_naprawic == 1)
+		{
+			suma += cena;
+		}
+	}
+	cout << "Laczna cena wybranych napraw: " << suma;
+
+
+	///////////////
+   // ZADANIE 4 //
+  ///////////////
+
+	cout << "\nKolor 1: ";
+	char kolor1;
+	cin >> kolor1;
+	while (kolor1 < (char)97 or kolor1 >(char)122)
+	{
+		cout << "Niepoprawny znak!\nPodaj litere od a do z: ";
+		cin >> kolor1;
+	}
+
+	cout << "Kolor 2: ";
+	char kolor2;
+	cin >> kolor2;
+	while (kolor2 < (char)97 or kolor2 >(char)122)
+	{
+		cout << "Niepoprawny znak!\nPodaj litere od a do z: ";
+		cin >> kolor2;
+	}
+
+	cout << "Szerokosc: ";
+	int width;
+	cin >> width;
+	while (width < 2 or width > 460)
+	{
+		cout << "Szerokosc mniejsza niz 2 lub wieksza niz 460 jest niedozwolona!\nPodaj szerokosc jeszcze raz: ";
+		cin >> width;
+	}
+
+	cout << "Dlugosc: ";
+	int length;
+	cin >> length;
+	while (length < 2 or length > 220)
+	{
+		cout << "Dlugosc mniejsza niz 2 lub wieksza niz 220 jest niedozwolona!\nPodaj dlugosc jeszcze raz: ";
+		cin >> length;
+	}
+
+	cout << "Rodzaj obszycia: ";
+	char obszycie;
+	cin >> obszycie;
+	while (obszycie < (char)33 or obszycie >(char)47)
+	{
+		cout << "Niepoprawny znak!\nPodaj jeden z tych znakow - !" << (char)34 << "#$%&'()*+,-./ : ";
+		cin >> obszycie;
+	}
+
+	int kolor1_kod = przypiszKolor(kolor1);
+	int kolor2_kod = przypiszKolor(kolor2);
+
+	int full_width = width * 2 + 2;
+	int full_length = length * 2 + 2;
+
+	for (int y = 0; y < full_length; y++)
+	{
+		for (int x = 0; x < full_width; x++)
+		{
+			if (x == 0 or y == 0 or y == full_length - 1 or x == full_width - 1)
+			{
+				cout << obszycie;
+			}
+			else
+			{
+				int kratka_x = (x - 1) / 2;
+				int kratka_y = (y - 1) / 2;
+				char znak = ((kratka_x + kratka_y) % 2 == 0) ? kolor1 : kolor2;
+				int kod = ((kratka_x + kratka_y) % 2 == 0) ? kolor1_kod : kolor2_kod;
+				cout << koloruj(znak, kod);
+			}
+		}
+		cout << endl;
+	}
+
+	///////////////
+   // ZADANIE 5 //
+  ///////////////
+
+
+	int zolw[5] = { 0 }, rundy = 0;
+	random_device losy;
+	mt19937 gen(losy());
+	uniform_int_distribution<int> zakres(0, 3);
+
+	bool koniec = false;
+
+	while (!koniec)
+	{
+		//ruch zolwi
+
+		for (int i = 0; i < 5; i++)
+		{
+			zolw[i] += zakres(gen);
+		}
+
+		//wyswietlenie rundy
+
+		cout << "R [" << rundy << "]:      ";
+		for (int i = 0; i < 5; i++)
+		{
+			cout << "   T[" << i + 1 << "] " << zolw[i] << "/50";
+		}
+		cout << endl;
+
+		//sprawdzanie zwyciezcy
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (zolw[i] >= 50)
+			{
+				cout << "Wygral zolw [" << i + 1 << "]\n";
+				koniec = true;
+				break;
+			}
+		}
+
+		rundy++;
+
+		Sleep(100);
+	}
+
+
+	///////////////
+   // ZADANIE 6 //
+  ///////////////
+
+	string wiadomosc = "re acwtmi de pexevrme oedhc tmvex dfmive wmi re amipoe defeae. exveogne amigdsvy xs eyogne woevfsa!";
+
+	int ile[26] = { 0 };
+
+	for (char a : wiadomosc)
+	{
+		if (a >= 'a' && a <= 'z')
+		{
+			ile[a - 'a']++;
+		}
+	}
+
+	int max = 0;
+	int przesuniecie = 0;
+	char najczestsza = 'a';
+
+	for (int i = 0; i < 26; i++)
+	{
+		if (ile[i] > max)
+		{
+			max = ile[i];
+			najczestsza = 'a' + i;
+			przesuniecie = i;
+		}
+	}
+
+	cout << "Wiadomosc zaszyfrowana:\n\n" << wiadomosc << "\n\nNajczesciej wystepuje tu litera " << najczestsza << ". Przesuniecie to: " << przesuniecie;
+
+	for (char& a : wiadomosc)
+	{
+		if (a >= 'a' && a <= 'z')
+		{
+			a = (a - 'a' - przesuniecie + 26) % 26 + 'a';
+		}
+	}
+
+	cout << "\n\nRozszyfrowana wiadomosc:\n\n" << wiadomosc << endl;
+
+	///////////////
+   // ZADANIE 7 //
+  ///////////////
+
+	int runda;
+
+	cout << "Podaj liczbe rund: ";
+	cin >> runda;
+
+	vector<int> zwrotka(runda);
+
+	for (int i = 0; i < runda; i++)
+	{
+		if (i == 0)
+		{
+			zwrotka[i] = 0;
+		}
+		else if (i == 1)
+		{
+			zwrotka[i] = 1;
+		}
+		else
+		{
+			zwrotka[i] = zwrotka[i - 2] + zwrotka[i - 1];
+		}
+
+		bool mod3 = zwrotka[i] % 3 == 0;
+		bool mod5 = zwrotka[i] % 5 == 0;
+
+		if (mod3 && mod5)
+		{
+			cout << "Runda [" << i + 1 << "]     " << "Aaaa Grrrrr!" << "     Ilosc zwrotek: " << zwrotka[i] << endl;
+			Sleep(500);
+		}
+		else if (mod5)
+		{
+			cout << "Runda [" << i + 1 << "]     " << "Grrrrrrrr" << "        Ilosc zwrotek: " << zwrotka[i] << endl;
+			Sleep(500);
+		}
+		else if (mod3)
+		{
+			cout << "Runda [" << i + 1 << "]     " << "Aaaa Grrrrr!" << "     Ilosc zwrotek: " << zwrotka[i] << endl;
+			Sleep(500);
+		}
+		else
+		{
+			cout << "Runda [" << i + 1 << "]" << "                      Ilosc zwrotek: " << zwrotka[i] << endl;
+			Sleep(500);
+		}
+	}
+
+	///////////////
+   // ZADANIE 8 //
+  ///////////////
+
+	int plansza[6][6] = { 0 }, rund = 0, punkty = 0, pkt = 0;
+	bool stop = false;
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	random_device rand;
+	mt19937 los(rand());
+	uniform_int_distribution<int> rzut(1, 6);
+
+	while (!stop)
+	{
+		bool trafione[6][6] = { false };
+
+		int d1 = rzut(los);
+		int d2 = rzut(los);
+
+		cout << "Runda " << rund + 1 << "\nKosc 1: " << d1 << " Kosc 2: " << d2 << endl;
+
+		if (plansza[d1 - 1][d2 - 1] == 0)
+		{
+			plansza[d1 - 1][d2 - 1] = rund + 1;
+			pkt = 0;
+		}
+		else
+		{
+			punkty += plansza[d1 - 1][d2 - 1];
+			pkt = plansza[d1 - 1][d2 - 1];
+		}
+
+		trafione[d1 - 1][d2 - 1] = true;
+
+		for (int x = 0; x < 6; x++)
+		{
+			for (int y = 0; y < 6; y++)
+			{
+				if (plansza[x][y] == 0)
+				{
+					cout << setw(4) << 'x';
+				}
+				else if (trafione[x][y])
+				{
+					SetConsoleTextAttribute(hConsole, 10);
+					cout << setw(4) << plansza[x][y];
+					SetConsoleTextAttribute(hConsole, 7);
+				}
+				else
+				{
+					SetConsoleTextAttribute(hConsole, 12);
+					cout << setw(4) << plansza[x][y];
+					SetConsoleTextAttribute(hConsole, 7);
+				}
+			}
+			cout << endl;
+		}
+
+		cout << "Pkt: " << punkty << "  +" << pkt << "pkt" << endl;
+
+
+		rund++;
+
+		Sleep(100);
+
+		bool wypelnione = true;
+		for (int x = 0; x < 6; x++)
+		{
+			for (int y = 0; y < 6; y++)
+			{
+				if (plansza[x][y] == 0)
+				{
+					wypelnione = false;
+					break;
+				}
+			}
+			if (!wypelnione) break;
+		}
+		stop = wypelnione;
+	}
+	cout << "Suma punktow: " << punkty;
+}

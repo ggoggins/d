@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+
+struct MapInfo {
+	int row = 0;
+	int col = 0;
+	std::string map;
+};
+
+void zad1(std::string fileName, MapInfo &mapinfo);
+int zad2(MapInfo& mapinfo, int r, int c);
+
+int main()
+{
+	MapInfo mapinfo;
+
+	zad1("map_1.txt", mapinfo);
+
+	std::cout << mapinfo.col << "\t" << mapinfo.row << "\t" << zad2(mapinfo,20,22) << "\n\n" << mapinfo.map;
+
+	return 0;
+}
+
+void zad1(std::string fileName, MapInfo &mapinfo) {
+	std::ifstream readFile(fileName);
+	std::string line;
+
+	while (std::getline(readFile, line)) {
+		if (mapinfo.row == 0) {
+			mapinfo.col = line.length();
+		}
+		mapinfo.map += line + "\n";
+		mapinfo.row++;
+	}
+	readFile.close();
+}
+
+int zad2(MapInfo &mapinfo, int r, int c) {
+	int treasureCount = 0;
+	for (int y = r - 2; y <= r + 2; y++) {
+		for (int x = c - 2; x <= c + 2; x++) {
+			if (x >= 0 && y >= 0 && x < mapinfo.col && y < mapinfo.row) {
+				int index = y * (mapinfo.col + 1) + x;
+				if (mapinfo.map[index] == 'x' || mapinfo.map[index] == 'X') treasureCount++;
+			}
+		}
+	}
+	return treasureCount;
+}

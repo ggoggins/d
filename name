@@ -10,14 +10,15 @@ struct MapInfo {
 
 void zad1(std::string fileName, MapInfo &mapinfo);
 int zad2(MapInfo& mapinfo, int r, int c);
+std::pair<int, int> best(MapInfo &mapinfo);
 
 int main()
 {
 	MapInfo mapinfo;
 
-	zad1("map_1.txt", mapinfo);
+	zad1("C:\\Users\\G\\source\\repos\\testy_kolos\\testy_kolos\\map_10.txt", mapinfo);
 
-	std::cout << mapinfo.col << "\t" << mapinfo.row << "\t" << zad2(mapinfo,20,22) << "\n\n" << mapinfo.map;
+	std::cout << mapinfo.col << "\t" << mapinfo.row << "\t" << zad2(mapinfo,20,22) << "\t(" << best(mapinfo).first << "," << best(mapinfo).second << ")\n\n" << mapinfo.map << "\n\n";
 
 	return 0;
 }
@@ -47,4 +48,21 @@ int zad2(MapInfo &mapinfo, int r, int c) {
 		}
 	}
 	return treasureCount;
+}
+
+std::pair<int, int> best(MapInfo &mapinfo) {
+	std::pair<int, int> best = {0,0};
+	int bestCount = 0;
+
+	for (int y = 0; y < mapinfo.row; y++) {
+		for (int x = 0; x < mapinfo.col; x++) {
+			int currentCount = zad2(mapinfo, y, x);
+			if (currentCount >= bestCount) {
+				bestCount = currentCount;
+				best.first = x;
+				best.second = y;
+			}
+		}
+	}
+	return best;
 }
